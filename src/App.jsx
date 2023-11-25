@@ -148,7 +148,7 @@ function App() {
             <button
               type="button"
               onClick={goBack}
-              className="bg-gray-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-gray-600 mr-2"
+              className="bg-gray-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-gray-600 w-full sm:w-auto mr-2"
             >
               Back
             </button>
