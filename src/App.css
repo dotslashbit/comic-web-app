@@ -1,0 +1,29 @@
+/* App.css */
+
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+}
+
+.progress-node {
+  width: 20px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.progress-node.completed {
+  background-color: #4caf50; /* Green color for completed nodes */
+  color: #fff;
+}
