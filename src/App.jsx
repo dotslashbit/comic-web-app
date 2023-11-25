@@ -1,18 +1,28 @@
 import { useState } from "react";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [imageURL, setImageURL] = useState(null);
+  const [prompts, setPrompts] = useState(Array(10).fill(""));
+  const [images, setImages] = useState(Array(10).fill(null));
 
-  function handleSubmitQuery(event) {
-    event.preventDefault();
-    console.log("Query submitted:", query);
-    search({ inputs: query }).then((response) => {
-      // Assuming the response is a Blob containing the image
-      const imageURL = URL.createObjectURL(response);
-      setImageURL(imageURL);
-    });
-    setQuery("");
+  function handlePromptChange(index, value) {
+    const newPrompts = [...prompts];
+    newPrompts[index] = value;
+    setPrompts(newPrompts);
+  }
+
+  async function handleSubmit() {
+    const imagePromises = prompts.map((prompt) => search({ inputs: prompt }));
+
+    try {
+      const imageResponses = await Promise.all(imagePromises);
+
+      const imageUrls = imageResponses.map((response) =>
+        URL.createObjectURL(response)
+      );
+      setImages(imageUrls);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
   }
 
   async function search(data) {
@@ -37,27 +47,38 @@ function App() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-black text-white font-sans">
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-6">Awesome React App</h1>
-        <form className="flex items-center">
-          <input
-            id="query"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Enter your query"
-            className="bg-gray-700 text-white px-4 py-2 rounded-md mt-2 focus:outline-none focus:ring focus:border-blue-300 w-full max-w-2xl"
-          />
+
+        <form>
+          {prompts.map((prompt, index) => (
+            <div key={index} className="mb-2">
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => handlePromptChange(index, e.target.value)}
+                placeholder={`Enter prompt ${index + 1}`}
+                className="bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+              />
+            </div>
+          ))}
           <button
-            type="submit"
-            onClick={handleSubmitQuery}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 focus:outline-none hover:bg-blue-600"
+            type="button"
+            onClick={handleSubmit}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600"
           >
             Submit
           </button>
         </form>
 
-        {imageURL && (
+        {images.every((image) => image !== null) && (
           <div className="mt-4">
-            <img src={imageURL} alt="Resulting Image" className="max-w-full" />
+            {images.map((imageUrl, index) => (
+              <img
+                key={index}
+                src={imageUrl}
+                alt={`Resulting Image ${index + 1}`}
+                className="max-w-full mb-2"
+              />
+            ))}
           </div>
         )}
       </div>
