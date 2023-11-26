@@ -168,8 +168,11 @@ function App() {
         <h1 className="text-4xl font-bold mb-6">Awesome React App</h1>
 
         {isLoading && (
-          <div className="flex items-center justify-center">
-            <div className="spinner border-t-4 border-blue-500 border-solid h-12 w-12 rounded-full animate-spin"></div>
+          <div className="flex flex-col items-center justify-center">
+            <div className="spinner border-t-4 border-blue-500 border-solid h-12 w-12 rounded-full animate-spin mb-2"></div>
+            <p className="text-gray-500">
+              Fetching images. This may take 10-12 minutes...
+            </p>
           </div>
         )}
 

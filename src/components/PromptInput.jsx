@@ -9,6 +9,11 @@ const PromptInput = ({
   onSubmitPrompt,
   onGoBack,
 }) => {
+  const progressData = prompts.map((_, index) => ({
+    promptNumber: index + 1,
+    completed: index < currentStep,
+  }));
+
   return (
     <div>
       <label htmlFor={`prompt-${currentStep + 1}`} className="sr-only">
@@ -44,7 +49,13 @@ const PromptInput = ({
 
       <div className="mt-4 progress-bar-container">
         <div className="progress-bar">
-          {/* ... (unchanged progress bar JSX) */}
+          {progressData.map((data) => (
+            <div
+              key={data.promptNumber}
+              className={`progress-node ${data.completed ? "completed" : ""}`}
+            />
+          ))}
+          <div className="progress-edge" />
         </div>
         <p className="text-gray-300 mt-2">
           {currentStep + 1} out of 10 prompts entered
