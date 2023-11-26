@@ -9,6 +9,14 @@ const PromptInput = ({
   onSubmitPrompt,
   onGoBack,
 }) => {
+  const handleKeyDown = (e) => {
+    // Check if the pressed key is Enter
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default behavior (e.g., form submission)
+      onSubmitPrompt();
+    }
+  };
+
   const progressData = prompts.map((_, index) => ({
     promptNumber: index + 1,
     completed: index < currentStep,
@@ -24,6 +32,7 @@ const PromptInput = ({
         id={`prompt-${currentStep + 1}`}
         value={prompts[currentStep]}
         onChange={(e) => onPromptChange(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder={`Enter prompt ${currentStep + 1}`}
         className="bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 mb-2 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3"
       />
