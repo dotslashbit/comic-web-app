@@ -16,14 +16,11 @@ function App() {
   const [currentStep, setCurrentStep] = useState(0);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
-
   const [feedback, setFeedback] = useState({
     like: 0,
     dislike: 0,
     suggestion: "",
   });
-
   const [voteStatus, setVoteStatus] = useState(null);
 
   useEffect(() => {
@@ -33,9 +30,11 @@ function App() {
   }, [currentStep]);
 
   const handlePromptChange = (value) => {
-    const newPrompts = [...prompts];
-    newPrompts[currentStep] = value;
-    setPrompts(newPrompts);
+    setPrompts((prevPrompts) => {
+      const newPrompts = [...prevPrompts];
+      newPrompts[currentStep] = value;
+      return newPrompts;
+    });
   };
 
   const handleSubmitPrompt = () => {
@@ -109,27 +108,20 @@ function App() {
     }
   }
 
-  const progressData = prompts.map((_, index) => ({
-    promptNumber: index + 1,
-    completed: index < currentStep,
-  }));
-
   const downloadImages = () => {
     const zip = new JSZip();
     const imagePromises = images.map((imageUrl, index) => {
       const fileName = `Resulting_Image_${index + 1}.png`;
-      return fetch(imageUrl).then((response) => {
-        return response.blob().then((blob) => {
-          zip.file(fileName, blob);
-        });
-      });
+      return fetch(imageUrl).then((response) =>
+        response.blob().then((blob) => zip.file(fileName, blob))
+      );
     });
 
-    Promise.all(imagePromises).then(() => {
-      zip.generateAsync({ type: "blob" }).then((content) => {
-        FileSaver.saveAs(content, "images.zip");
-      });
-    });
+    Promise.all(imagePromises).then(() =>
+      zip
+        .generateAsync({ type: "blob" })
+        .then((content) => FileSaver.saveAs(content, "images.zip"))
+    );
   };
 
   const handleLike = () => {

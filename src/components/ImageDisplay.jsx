@@ -29,7 +29,6 @@ const ImageDisplay = ({ images, prompts, onDownloadImages }) => {
           >
             Download Images
           </button>
-          {/* ... (unchanged JSX for copied confirmation) */}
         </div>
       </div>
     </div>

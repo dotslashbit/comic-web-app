@@ -1,8 +1,8 @@
-# Awesome React App Documentation
+# Comic Generator Web App Documentation
 
 ## Overview
 
-The Awesome React App is a web application designed to facilitate the process of generating images based on user-provided prompts. Users can enter prompts, navigate through a series of steps, and ultimately receive a collection of resulting images.
+The Comic Generator Web App is a web application designed to facilitate the process of generating 10 comic panels based on user-provided prompts. Users can enter prompts, navigate through a series of steps, and ultimately receive a collection of resulting images.
 
 ## Features
 
@@ -14,10 +14,10 @@ The Awesome React App is a web application designed to facilitate the process of
 
 ## Getting Started
 
-To run the Awesome React App locally, follow these steps:
+To run the Comic Generator Web App locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/awesome-react-app.git`
-2. Navigate to the project directory: `cd awesome-react-app`
+1. Clone the repository: `git clone https://github.com/dotslashbit/comic-web-app`
+2. Navigate to the project directory: `cd comic-web-app`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 5. Open your browser and visit `http://localhost:3000`
