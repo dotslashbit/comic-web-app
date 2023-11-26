@@ -165,7 +165,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-black text-white font-sans">
       <div className="container mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-6">Awesome React App</h1>
+        <h1 className="text-4xl font-bold mb-6">Comic Generator Web-App</h1>
 
         {isLoading && (
           <div className="flex flex-col items-center justify-center">
