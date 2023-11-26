@@ -9,6 +9,7 @@ import FileSaver from "file-saver";
 import PromptInput from "./components/PromptInput";
 import ImageDisplay from "./components/ImageDisplay";
 import FeedbackSection from "./components/FeedbackSection";
+import TypingAnimation from "./components/TypingAnimation";
 
 function App() {
   const [prompts, setPrompts] = useState(Array(10).fill(""));
@@ -157,7 +158,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-black text-white font-sans">
       <div className="container mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-6">Comic Generator Web-App</h1>
+        <TypingAnimation />
 
         {isLoading && (
           <div className="flex flex-col items-center justify-center">
