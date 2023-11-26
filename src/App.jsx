@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import "./App.css";
 import JSZip from "jszip";
 import FileSaver from "file-saver";
@@ -10,6 +11,14 @@ function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const [feedback, setFeedback] = useState({
+    like: 0,
+    dislike: 0,
+    suggestion: "",
+  });
+
+  const [voteStatus, setVoteStatus] = useState(null);
 
   useEffect(() => {
     if (currentStep === 10) {
@@ -118,6 +127,43 @@ function App() {
     });
   };
 
+  const handleLike = () => {
+    if (voteStatus === null) {
+      setFeedback((prevFeedback) => ({
+        ...prevFeedback,
+        like: prevFeedback.like + 1,
+      }));
+      setVoteStatus("upvote");
+    }
+  };
+
+  const handleDislike = () => {
+    if (voteStatus === null) {
+      setFeedback((prevFeedback) => ({
+        ...prevFeedback,
+        dislike: prevFeedback.dislike + 1,
+      }));
+      setVoteStatus("downvote");
+    }
+  };
+
+  const handleSuggestionChange = (value) => {
+    setFeedback((prevFeedback) => ({ ...prevFeedback, suggestion: value }));
+  };
+
+  const handleSubmitFeedback = () => {
+    // Perform any necessary actions with feedback data
+    console.log("Feedback:", feedback);
+
+    // Optionally, you can reset feedback state after submission
+    setFeedback({ like: 0, dislike: 0, suggestion: "" });
+
+    // Optionally, you can close or navigate away from the feedback section
+
+    // Reset vote status after submission
+    setVoteStatus(null);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-black text-white font-sans">
       <div className="container mx-auto text-center">
@@ -184,35 +230,70 @@ function App() {
         )}
 
         {currentStep === 10 && images.every((image) => image !== null) && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
-            {images.map((imageUrl, index) => (
-              <div key={index} className="comic-plate">
-                <a
-                  href={imageUrl}
-                  download={`Resulting_Image_${index + 1}.png`}
-                  className="max-w-full mb-2"
-                >
-                  <img
-                    src={imageUrl}
-                    alt={`Resulting Image ${index + 1}`}
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+              {images.map((imageUrl, index) => (
+                <div key={index} className="comic-plate">
+                  <a
+                    href={imageUrl}
+                    download={`Resulting_Image_${index + 1}.png`}
                     className="max-w-full mb-2"
-                  />
-                </a>
-                <p className="text-center text-gray-300">{prompts[index]}</p>
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={`Resulting Image ${index + 1}`}
+                      className="max-w-full mb-2"
+                    />
+                  </a>
+                  <p className="text-center text-gray-300">{prompts[index]}</p>
+                </div>
+              ))}
+              <div className="mt-4">
+                <button
+                  onClick={downloadImages}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600"
+                >
+                  Download Images
+                </button>
+                {copied && (
+                  <p className="text-green-500 mt-2">
+                    Images copied to clipboard!
+                  </p>
+                )}
               </div>
-            ))}
-            <div className="mt-4">
+            </div>
+
+            {/* Feedback Section */}
+            <div className="mt-8 flex items-center space-x-4">
+              {/* Like Button */}
+              <FaThumbsUp
+                className="cursor-pointer text-green-500 text-2xl"
+                onClick={handleLike}
+              />
+              <span className="text-white">{feedback.like}</span>
+
+              {/* Dislike Button */}
+              <FaThumbsDown
+                className="cursor-pointer text-red-500 text-2xl"
+                onClick={handleDislike}
+              />
+              <span className="text-white">{feedback.dislike}</span>
+
+              {/* Suggestion Input */}
+              <textarea
+                value={feedback.suggestion}
+                onChange={(e) => handleSuggestionChange(e.target.value)}
+                placeholder="Provide your suggestion..."
+                className="bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 mb-2 flex-grow"
+              />
+
+              {/* Submit Feedback Button */}
               <button
-                onClick={downloadImages}
+                onClick={handleSubmitFeedback}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600"
               >
-                Download Images
+                Submit Feedback
               </button>
-              {copied && (
-                <p className="text-green-500 mt-2">
-                  Images copied to clipboard!
-                </p>
-              )}
             </div>
           </div>
         )}
