@@ -22,14 +22,17 @@ const ImageDisplay = ({ images, prompts, onDownloadImages }) => {
             <p className="text-center text-gray-300">{prompts[index]}</p>
           </div>
         ))}
-        <div className="mt-4">
-          <button
-            onClick={onDownloadImages}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600"
-          >
-            Download Images
-          </button>
-        </div>
+      </div>
+      <div className="mt-4 text-center text-blue-500">
+        Click on individual images to download them.
+      </div>
+      <div className="mt-4">
+        <button
+          onClick={onDownloadImages}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-blue-600"
+        >
+          Download All Images
+        </button>
       </div>
     </div>
   );
