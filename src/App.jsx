@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
-import "./App.css";
+import "./App.css"; // Importing external CSS file
 import JSZip from "jszip";
 import FileSaver from "file-saver";
 
@@ -12,6 +12,7 @@ import FeedbackSection from "./components/FeedbackSection";
 import TypingAnimation from "./components/TypingAnimation";
 
 function App() {
+  // State variables using React Hooks
   const [prompts, setPrompts] = useState(Array(10).fill(""));
   const [images, setImages] = useState(Array(10).fill(null));
   const [currentStep, setCurrentStep] = useState(0);
@@ -24,12 +25,14 @@ function App() {
   });
   const [voteStatus, setVoteStatus] = useState(null);
 
+  // Effect hook to fetch images when the current step changes
   useEffect(() => {
     if (currentStep === 10) {
       fetchImages();
     }
   }, [currentStep]);
 
+  // Function to handle prompt input change
   const handlePromptChange = (value) => {
     setPrompts((prevPrompts) => {
       const newPrompts = [...prevPrompts];
@@ -38,6 +41,7 @@ function App() {
     });
   };
 
+  // Function to handle submission of prompt
   const handleSubmitPrompt = () => {
     if (!prompts[currentStep].trim()) {
       setError("Please enter a prompt before moving forward.");
@@ -53,12 +57,14 @@ function App() {
     }
   };
 
+  // Function to go back to the previous step
   const goBack = () => {
     if (currentStep > 0) {
       setCurrentStep((prevStep) => prevStep - 1);
     }
   };
 
+  // Function to fetch images from the Hugging Face API
   const fetchImages = async () => {
     try {
       setIsLoading(true);
@@ -82,6 +88,7 @@ function App() {
     }
   };
 
+  // Function to search for images using the Hugging Face API
   async function search(data) {
     try {
       const response = await fetch(
@@ -109,6 +116,7 @@ function App() {
     }
   }
 
+  // Function to download all images as a zip file
   const downloadImages = () => {
     const zip = new JSZip();
     const imagePromises = images.map((imageUrl, index) => {
@@ -125,6 +133,7 @@ function App() {
     );
   };
 
+  // Function to handle user's like action
   const handleLike = () => {
     if (voteStatus === null) {
       setFeedback((prevFeedback) => ({
@@ -135,6 +144,7 @@ function App() {
     }
   };
 
+  // Function to handle user's dislike action
   const handleDislike = () => {
     if (voteStatus === null) {
       setFeedback((prevFeedback) => ({
@@ -145,21 +155,26 @@ function App() {
     }
   };
 
+  // Function to handle suggestion input change
   const handleSuggestionChange = (value) => {
     setFeedback((prevFeedback) => ({ ...prevFeedback, suggestion: value }));
   };
 
+  // Function to handle submission of feedback
   const handleSubmitFeedback = () => {
     console.log("Feedback:", feedback);
     setFeedback({ like: 0, dislike: 0, suggestion: "" });
     setVoteStatus(null);
   };
 
+  // JSX structure of the component
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-800 to-black text-white font-sans">
       <div className="container mx-auto text-center">
+        {/* Typing animation for the headline */}
         <TypingAnimation />
 
+        {/* Loading indicator */}
         {isLoading && (
           <div className="flex flex-col items-center justify-center">
             <div className="spinner border-t-4 border-blue-500 border-solid h-12 w-12 rounded-full animate-spin mb-2"></div>
@@ -169,8 +184,10 @@ function App() {
           </div>
         )}
 
+        {/* Display error message */}
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
+        {/* Display prompt input or feedback sections based on the current step */}
         {currentStep < 10 && (
           <PromptInput
             currentStep={currentStep}
@@ -181,6 +198,7 @@ function App() {
           />
         )}
 
+        {/* Display image grid and download button after all prompts are entered */}
         {currentStep === 10 && images.every((image) => image !== null) && (
           <ImageDisplay
             images={images}
@@ -189,6 +207,7 @@ function App() {
           />
         )}
 
+        {/* Display feedback section after images are fetched */}
         {currentStep === 10 && images.every((image) => image !== null) && (
           <FeedbackSection
             feedback={feedback}
