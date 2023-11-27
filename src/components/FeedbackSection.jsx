@@ -1,4 +1,4 @@
-// components/FeedbackSection.js
+// components/FeedbackSection.jsx
 
 import React, { useState } from "react";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";

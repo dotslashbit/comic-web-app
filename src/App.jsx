@@ -1,4 +1,4 @@
-// App.js
+// App.jsx
 
 import React, { useState, useEffect } from "react";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";

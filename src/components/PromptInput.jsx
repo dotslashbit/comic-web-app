@@ -1,4 +1,4 @@
-// components/PromptInput.js
+// components/PromptInput.jsx
 
 import React from "react";
 

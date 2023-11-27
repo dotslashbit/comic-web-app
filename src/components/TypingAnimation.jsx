@@ -1,4 +1,4 @@
-// components/TypingAnimation.js
+// components/TypingAnimation.jsx
 
 import React, { useState, useEffect } from "react";
 

@@ -1,4 +1,4 @@
-// components/ImageDisplay.js
+// components/ImageDisplay.jsx
 
 import React from "react";
 
