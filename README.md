@@ -37,7 +37,10 @@ To run the Comic Generator Web App locally, follow these steps:
 3. **Viewing and Downloading Images**:
 
    - View the resulting images along with the entered prompts.
-   - Download images using the "Download Images" button.
+   - **Download All Images**:
+     - Click the "Download All Images" button to download a ZIP file containing all resulting images.
+   - **Download Individual Images**:
+     - Click on individual images to download them in full size.
 
 4. **Providing Feedback**:
    - Use the thumbs-up and thumbs-down icons to vote on images.
@@ -46,15 +49,17 @@ To run the Comic Generator Web App locally, follow these steps:
 
 ## Dependencies
 
-The Awesome React App relies on the following key dependencies:
+The Comic Generator Web App relies on the following key dependencies:
 
 - [React](https://reactjs.org/)
 - [JSZip](https://stuk.github.io/jszip/)
 - [FileSaver](https://github.com/eligrey/FileSaver.js/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
 
 ## Contributing
 
-Contributions to the Awesome React App are welcome! If you encounter issues or have suggestions, feel free to open an [issue](https://github.com/your-username/awesome-react-app/issues) or submit a [pull request](https://github.com/your-username/awesome-react-app/pulls).
+Contributions to the Comic Generator Web App are welcome! If you encounter issues or have suggestions, feel free to open an [issue](https://github.com/your-username/comic-web-app/issues) or submit a [pull request](https://github.com/your-username/comic-web-app/pulls).
 
 ## License
 
